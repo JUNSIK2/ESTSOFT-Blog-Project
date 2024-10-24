@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>thymeleaf</h1>
+<div th:object="${person}">
+    <p th:text="|이름 : *{name}|"></p>
+    <p th:text="|나이 : *{age}|"></p>
+    <ul th:each="hobby : *{hobbies}">
+        <li th:text="${hobby}"></li>
+        <span th:if="${hobby == '웨이트'}">(대표취미)</span>
+    </ul>
+</div>
+</body>
+</html>
