@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class ArticleViewResponse {
-    private Long article_id;
+    private Long articleId;
     private String title;
     private String content;
     private LocalDateTime createdAt;
 
     public ArticleViewResponse(Article article) {
-        this.article_id = article.getArticleId();
+        this.articleId = article.getArticleId();
         this.title = article.getTitle();
         this.content = article.getContent();
         this.createdAt = article.getCreatedAt();
