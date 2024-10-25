@@ -12,14 +12,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddArticleRequest {
-    @JsonProperty(value = "id")
-    private Long articleId;
-    @JsonProperty(value = "title")
+//    @JsonProperty(value = "id")
+//    private Long articleId;
+//    @JsonProperty(value = "title")
     private String title;
-    @JsonProperty(value = "body")
+//    @JsonProperty(value = "body")
     private String content;
 
     public Article toEntity() {
-        return new Article(articleId, title, content);
+        return new Article(title, content);
     }
 }

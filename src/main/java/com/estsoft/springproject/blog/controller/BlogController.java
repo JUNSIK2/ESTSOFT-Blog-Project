@@ -34,7 +34,6 @@ public class BlogController {
     @PostMapping("/articles")
     public ResponseEntity<ArticleResponse> addArticle(@RequestBody AddArticleRequest request) { // RequestBody로 요청 본문 값 매핑
         Article article = blogService.saveArticle(request);
-        log.info("{},{}", request.getTitle(), request.getContent());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(article.toArticleResponse());
     }
