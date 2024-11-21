@@ -10,6 +10,8 @@ on:
 env:
   S3_BUCKET_NAME: junsik-bucket
   AWS_REGION: ap-northeast-2
+  CODEDEPLOY_NAME: github-actions
+  CODEDEPLOY_GROUP: github-actions-group
 
 jobs:
   build:
@@ -68,5 +70,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582
+
+    - name: Code Deploy
+      run: aws deploy create-deployment --application-name $CODEDEPLOY_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODEDEPLOY_GROUP --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip
