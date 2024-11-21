@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
+    id "org.sonarqube" version "5.1.0.4882"
+    id 'jacoco'
 }
 
 group = 'com.estsoft'
@@ -35,6 +37,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
@@ -42,4 +45,26 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.token", "sqp_0f0055227a93190bb93d7174b66fcca668c06e42" // token
+        property "sonar.projectKey", "spring-project"           // project key
+        property "sonar.sources", "src"
+        property "sonar.language", "java"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.test.inclusions", "**/*Test.java"
+        property 'sonar.exclusions', '**/test/**, **/resources/**, **/*Application.java'
+        property 'sonar.coverage.jacoco.xmlReportPaths', layout.buildDirectory.dir("reports/jacoco/test/jacocoTestReport.xml").get().asFile
+    }
 }

@@ -61,7 +61,7 @@ class BlogControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         // When : API 요청
-        ResultActions resultActions = mockMvc.perform(post("/articles")
+        ResultActions resultActions = mockMvc.perform(post("/api/articles")
                 .contentType(MediaType.APPLICATION_JSON).content(json));
 
         // Then
@@ -77,7 +77,7 @@ class BlogControllerTest {
     public void getAll() throws Exception {
         Article article = repository.save(new Article("제목", "내용"));
 
-        ResultActions actions = mockMvc.perform(get("/articles").accept(MediaType.APPLICATION_JSON));
+        ResultActions actions = mockMvc.perform(get("/api/articles").accept(MediaType.APPLICATION_JSON));
 
         actions.andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(article.getTitle()))
@@ -88,7 +88,7 @@ class BlogControllerTest {
     public void getOne() throws Exception {
         Article article = repository.save(new Article("제목", "내용"));
 
-        ResultActions actions = mockMvc.perform(get("/articles/{id}", article.getArticleId()).accept(MediaType.APPLICATION_JSON));
+        ResultActions actions = mockMvc.perform(get("/api/articles/{id}", article.getArticleId()).accept(MediaType.APPLICATION_JSON));
 
         actions.andExpect(status().isOk())
                 .andExpect(jsonPath("title").value(article.getTitle()))
@@ -97,7 +97,7 @@ class BlogControllerTest {
 
     @Test
     public void getOneException() throws Exception {
-        ResultActions actions = mockMvc.perform(get("/articles/{id}", 1L).accept(MediaType.APPLICATION_JSON));
+        ResultActions actions = mockMvc.perform(get("/api/articles/{id}", 1L).accept(MediaType.APPLICATION_JSON));
 
         actions.andExpect(status().isBadRequest());
 
@@ -108,7 +108,7 @@ class BlogControllerTest {
     public void deleteOne() throws Exception {
         Article article = repository.save(new Article("제목", "내용"));
 
-        ResultActions actions = mockMvc.perform(delete("/articles/{id}", article.getArticleId()));
+        ResultActions actions = mockMvc.perform(delete("/api/articles/{id}", article.getArticleId()));
 
         actions.andExpect(status().isOk());
         List<Article> articleList = repository.findAll();
@@ -122,7 +122,7 @@ class BlogControllerTest {
         UpdateArticleRequest request = new UpdateArticleRequest("변경 제목", "변경 내용");
         String updateJsonContent = objectMapper.writeValueAsString(request);
 
-        ResultActions actions = mockMvc.perform(put("/articles/{id}", article.getArticleId())
+        ResultActions actions = mockMvc.perform(put("/api/articles/{id}", article.getArticleId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateJsonContent));
 
@@ -135,7 +135,7 @@ class BlogControllerTest {
         UpdateArticleRequest request = new UpdateArticleRequest("변경 제목", "변경 내용");
         String updateJsonContent = objectMapper.writeValueAsString(request);
 
-        ResultActions actions = mockMvc.perform(put("/articles/{id}", 2L)
+        ResultActions actions = mockMvc.perform(put("/api/articles/{id}", 2L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateJsonContent));
 

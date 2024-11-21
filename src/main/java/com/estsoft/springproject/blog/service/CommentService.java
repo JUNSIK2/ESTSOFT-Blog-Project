@@ -51,4 +51,15 @@ public class CommentService {
         return new ArticleCommentResponse(article.toArticleResponse(), commentResponseList);
     }
 
+    public List<Comment> saveCommentList(List<AddCommentRequest> requestList, Long ArticleId){
+        blogRepository.findById(ArticleId);
+        List<Comment> commentList = requestList.stream().map(addCommentRequest -> {
+            addCommentRequest.setArticle(blogRepository.findById(ArticleId).orElseThrow());
+            return addCommentRequest.toEntity();
+        })
+                .toList();
+        return commentRepository.saveAll(commentList);
+
+    }
+
 }

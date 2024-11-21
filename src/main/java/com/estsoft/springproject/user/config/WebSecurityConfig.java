@@ -73,6 +73,7 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl("/articles", true)
                 )
                 .logout(custom -> custom
+                    .logoutUrl("/logout")
                         .logoutSuccessUrl("/articles")
                         .invalidateHttpSession(true)
                 )

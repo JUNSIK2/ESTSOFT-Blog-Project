@@ -10,6 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class AddCommentRequest {
     private Article article;
     @JsonProperty(value = "body")

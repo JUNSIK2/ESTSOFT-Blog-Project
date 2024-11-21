@@ -38,7 +38,7 @@ public class BlogService {
         blogRepository.deleteById(id);
     }
 
-    public List<Article> saveArticleList(List<AddArticleRequest> requests){
+    public List<Article> saveArticleList(List<AddArticleRequest> requests) {
         List<Article> articleList = requests.stream().map(AddArticleRequest::toEntity).toList();
         return blogRepository.saveAll(articleList);
     }
