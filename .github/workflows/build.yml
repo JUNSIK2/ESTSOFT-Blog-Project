@@ -5,7 +5,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+  workflow_dispatch:
+    
 env:
   S3_BUCKET_NAME: junsik-bucket
   AWS_REGION: ap-northeast-2
